@@ -108,7 +108,7 @@ tempo_limit = 3
 subtitle = sub.subtitle(f"{os.getcwd()}/{sub_file_name}")
 
 # Convert subtitle data to audio
-sub.convert_to_audio(sub_data=subtitle, output_path= f"{os.getcwd()}/{srt_aud_file}_ar",tempo_mode='overflow', speaker_wav=f"{os.getcwd()}/{audio_file}" , language='ar', tempo_limit=tempo_limit)
+sub.convert_to_audio(sub_data=subtitle, output_path= f"{srt_aud_file}_ar",tempo_mode='overflow', speaker_wav=f"{os.getcwd()}/{audio_file}" , language='ar', tempo_limit=tempo_limit)
 
 # Load the video and audio clips
 video_clip = VideoFileClip(mp4_file)
