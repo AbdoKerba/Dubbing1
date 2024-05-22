@@ -16,7 +16,7 @@ Original file is located at
 
 # !pip install -r requirements.txt
 
-cd Dubbing1/
+# cd Dubbing1/
 
 from pytube import YouTube
 import os
