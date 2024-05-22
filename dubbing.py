@@ -17,6 +17,20 @@ Original file is located at
 # !pip install -r requirements.txt
 
 # cd Dubbing1/
+import argparse
+
+# Create the parser
+parser = argparse.ArgumentParser(description='Dubbing Parameters')
+
+# Add the new argument
+# For example, let's add a parameter called --name
+parser.add_argument('--link', type=str, help='Link of Youtube viedo', required=True)
+
+# Parse the arguments
+args = parser.parse_args()
+
+# Access the parameter
+link = args.link
 
 from pytube import YouTube
 import os
@@ -46,7 +60,7 @@ def download_video_with_resolution_and_name(youtube_url, save_path, resolution, 
 
 # Example usage
 if __name__ == "__main__":
-    video_url = "https://www.youtube.com/watch?v=cJTXh7g-uCM&ab_channel=AmitThinks"
+    video_url = link
     save_directory = os.getcwd()
     desired_resolution = 360  # Specify the desired resolution here
     custom_file_name = os.getcwd() + "/video.mp4"  # Specify the custom file name here
