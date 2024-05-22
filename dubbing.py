@@ -39,14 +39,14 @@ if __name__ == "__main__":
     video_url = "https://www.youtube.com/watch?v=cJTXh7g-uCM&ab_channel=AmitThinks"
     save_directory = "/content"
     desired_resolution = 360  # Specify the desired resolution here
-    custom_file_name = "video.mp4"  # Specify the custom file name here
+    custom_file_name = os.getcwd() + "/video.mp4"  # Specify the custom file name here
     download_video_with_resolution_and_name(video_url, save_directory, desired_resolution, custom_file_name)
 
 from moviepy.editor import VideoFileClip , AudioFileClip
 import os
 # Define the input video file and output audio file
-mp4_file = os.getcwd() + "video.mp4"
-audio_file = os.getcwd() + "audio.mp3"
+mp4_file = os.getcwd() + "/video.mp4"
+audio_file = os.getcwd() + "/audio.mp3"
 
 # Load the video clip
 video_clip = VideoFileClip(mp4_file)
@@ -83,10 +83,10 @@ import datetime
 
 srt_aud_file = audio_file.split('.')[0]
 translated_subs = ''
-with open(f"{os.getcwd()}/{srt_aud_file}.srt", "r", encoding="utf-8") as txt:
+with open(f"{srt_aud_file}.srt", "r", encoding="utf-8") as txt:
   for line in txt.readlines():
     translated_subs += f"{GoogleTranslator(source='en', target='ar').translate(line)}\n"
-with open(f"{os.getcwd()}/{srt_aud_file}_ar.srt",mode='w') as sub_output:
+with open(f"{srt_aud_file}_ar.srt",mode='w') as sub_output:
     sub_output.write(translated_subs)
 
 """Text To Speech"""
