@@ -7,6 +7,13 @@ Original file is located at
     https://colab.research.google.com/drive/1sVzQCRlH5X9Wut8Pm6b-7d3VKflOgYGD
 """
 
+!pip install pytube
+!pip install git+https://github.com/openai/whisper.git
+!pip install ffmpeg
+!pip install deep_translator
+!pip install subtoaudio
+!pip install TTS
+
 from pytube import YouTube
 import os
 
@@ -42,9 +49,10 @@ if __name__ == "__main__":
     download_video_with_resolution_and_name(video_url, save_directory, desired_resolution, custom_file_name)
 
 from moviepy.editor import VideoFileClip , AudioFileClip
+import os
 # Define the input video file and output audio file
-mp4_file = "video.mp4"
-audio_file = "audio.mp3"
+mp4_file = os.getcwd() + "video.mp4"
+audio_file = os.getcwd() + "audio.mp3"
 
 # Load the video clip
 video_clip = VideoFileClip(mp4_file)
@@ -71,7 +79,7 @@ model = whisper.load_model("medium")
 result = model.transcribe(audio_file)
 
 from whisper.utils import get_writer
-txt_writer = get_writer("srt", "/content/")
+txt_writer = get_writer("srt", os.getcwd())
 txt_writer(result, audio_file)
 
 
@@ -81,10 +89,10 @@ import datetime
 
 srt_aud_file = audio_file.split('.')[0]
 translated_subs = ''
-with open(f"/content/{srt_aud_file}.srt", "r", encoding="utf-8") as txt:
+with open(f"{os.getcwd()}/{srt_aud_file}.srt", "r", encoding="utf-8") as txt:
   for line in txt.readlines():
     translated_subs += f"{GoogleTranslator(source='en', target='ar').translate(line)}\n"
-with open(f"/content/{srt_aud_file}_ar.srt",mode='w') as sub_output:
+with open(f"{os.getcwd()}/{srt_aud_file}_ar.srt",mode='w') as sub_output:
     sub_output.write(translated_subs)
 
 """Text To Speech"""
@@ -94,23 +102,23 @@ with open(f"/content/{srt_aud_file}_ar.srt",mode='w') as sub_output:
 from subtoaudio import SubToAudio
 
 # Initialize SubToAudio with a Coqui TTS model (e.g., English)
-# sub = SubToAudio(model_name="tts_models/multilingual/multi-dataset/xtts_v2", )
+sub = SubToAudio(model_name="tts_models/multilingual/multi-dataset/xtts_v2", )
 
 #load pretrained model
-sub = SubToAudio(config_path="/content/drive/MyDrive/tts_models/config.json" , model_path='/content/drive/MyDrive/tts_models/')
+# sub = SubToAudio(config_path="/content/drive/MyDrive/tts_models/config.json" , model_path='/content/drive/MyDrive/tts_models/')
 
 sub_file_name = f'{srt_aud_file}_ar.srt'
 tempo_limit = 3
 
 # Provide the path to your subtitle file (e.g., 'yoursubtitle.srt')
-subtitle = sub.subtitle(f"/content/{sub_file_name}")
+subtitle = sub.subtitle(f"{os.getcwd()}/{sub_file_name}")
 
 # Convert subtitle data to audio
-sub.convert_to_audio(sub_data=subtitle, output_path= f"/content/{srt_aud_file}_ar",tempo_mode='overflow', speaker_wav=f"/content/{audio_file}" , language='ar', tempo_limit=tempo_limit)
+sub.convert_to_audio(sub_data=subtitle, output_path= f"{os.getcwd()}/{srt_aud_file}_ar",tempo_mode='overflow', speaker_wav=f"{os.getcwd()}/{audio_file}" , language='ar', tempo_limit=tempo_limit)
 
 # Load the video and audio clips
 video_clip = VideoFileClip(mp4_file)
-new_audio_clip = AudioFileClip("audio_ar.wav")
+new_audio_clip = AudioFileClip(f"{os.getcwd()}/audio_ar.wav")
 
 # Remove the original audio from the video
 video_without_audio = video_clip.without_audio()
@@ -119,7 +127,7 @@ video_without_audio = video_clip.without_audio()
 final_video = video_without_audio.set_audio(new_audio_clip)
 
 # Save the final video
-final_video.write_videofile("output_video.mp4", codec="libx264", audio_codec="aac")
+final_video.write_videofile(f"{os.getcwd()}/output_video.mp4", codec="libx264", audio_codec="aac")
 
 # import locale
 # locale.getpreferredencoding = lambda: "UTF-8"
