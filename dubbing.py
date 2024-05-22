@@ -7,6 +7,16 @@ Original file is located at
     https://colab.research.google.com/drive/1sVzQCRlH5X9Wut8Pm6b-7d3VKflOgYGD
 """
 
+!pip install pytube
+!pip install git+https://github.com/openai/whisper.git
+!pip install ffmpeg
+!pip install deep_translator
+!pip install subtoaudio
+!pip install TTS
+
+!pip install -r requirements.txt
+
+cd Dubbing1/
 
 from pytube import YouTube
 import os
@@ -37,7 +47,7 @@ def download_video_with_resolution_and_name(youtube_url, save_path, resolution, 
 # Example usage
 if __name__ == "__main__":
     video_url = "https://www.youtube.com/watch?v=cJTXh7g-uCM&ab_channel=AmitThinks"
-    save_directory = "/content"
+    save_directory = os.getcwd()
     desired_resolution = 360  # Specify the desired resolution here
     custom_file_name = os.getcwd() + "/video.mp4"  # Specify the custom file name here
     download_video_with_resolution_and_name(video_url, save_directory, desired_resolution, custom_file_name)
@@ -105,10 +115,10 @@ sub_file_name = f'{srt_aud_file}_ar.srt'
 tempo_limit = 3
 
 # Provide the path to your subtitle file (e.g., 'yoursubtitle.srt')
-subtitle = sub.subtitle(f"{os.getcwd()}/{sub_file_name}")
+subtitle = sub.subtitle(f"/{sub_file_name}")
 
 # Convert subtitle data to audio
-sub.convert_to_audio(sub_data=subtitle, output_path= f"{srt_aud_file}_ar",tempo_mode='overflow', speaker_wav=f"{os.getcwd()}/{audio_file}" , language='ar', tempo_limit=tempo_limit)
+sub.convert_to_audio(sub_data=subtitle, output_path= f"{srt_aud_file}_ar",tempo_mode='overflow', speaker_wav=f"{audio_file}" , language='ar', tempo_limit=tempo_limit)
 
 # Load the video and audio clips
 video_clip = VideoFileClip(mp4_file)
