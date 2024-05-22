@@ -32,7 +32,7 @@ args = parser.parse_args()
 
 # Access the parameter
 link = args.link
-tempo = args.tempo
+tempo = float(args.tempo)
 
 from pytube import YouTube
 import os
