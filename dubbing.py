@@ -7,12 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1sVzQCRlH5X9Wut8Pm6b-7d3VKflOgYGD
 """
 
-!pip install pytube
-!pip install git+https://github.com/openai/whisper.git
-!pip install ffmpeg
-!pip install deep_translator
-!pip install subtoaudio
-!pip install TTS
 
 from pytube import YouTube
 import os
