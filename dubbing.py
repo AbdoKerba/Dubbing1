@@ -14,7 +14,7 @@ Original file is located at
 # !pip install subtoaudio
 # !pip install TTS
 
-!pip install -r requirements.txt
+# !pip install -r requirements.txt
 
 cd Dubbing1/
 
