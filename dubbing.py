@@ -25,12 +25,14 @@ parser = argparse.ArgumentParser(description='Dubbing Parameters')
 # Add the new argument
 # For example, let's add a parameter called --name
 parser.add_argument('--link', type=str, help='Link of Youtube viedo', required=True)
+parser.add_argument('--tempo', type=int, default=3, help='Tempo value')
 
 # Parse the arguments
 args = parser.parse_args()
 
 # Access the parameter
 link = args.link
+tempo = args.tempo
 
 from pytube import YouTube
 import os
@@ -126,13 +128,12 @@ sub = SubToAudio(model_name="tts_models/multilingual/multi-dataset/xtts_v2", )
 # sub = SubToAudio(config_path="/content/drive/MyDrive/tts_models/config.json" , model_path='/content/drive/MyDrive/tts_models/')
 
 sub_file_name = f'{srt_aud_file}_ar.srt'
-tempo_limit = 3
 
 # Provide the path to your subtitle file (e.g., 'yoursubtitle.srt')
 subtitle = sub.subtitle(f"/{sub_file_name}")
 
 # Convert subtitle data to audio
-sub.convert_to_audio(sub_data=subtitle, output_path= f"{srt_aud_file}_ar",tempo_mode='overflow', speaker_wav=f"{audio_file}" , language='ar', tempo_limit=tempo_limit)
+sub.convert_to_audio(sub_data=subtitle, output_path= f"{srt_aud_file}_ar",tempo_mode='overflow', speaker_wav=f"{audio_file}" , language='ar', tempo_limit=tempo)
 
 # Load the video and audio clips
 video_clip = VideoFileClip(mp4_file)
