@@ -1,4 +1,3 @@
-git
 pytube
 ffmpeg
 deep_translator
